@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import AuthContext from "../store/auth-context";
 
-const AuthForm = () => {
+const AuthSignUPForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const emailInputRef = useRef();
@@ -54,7 +54,8 @@ const AuthForm = () => {
       if (response.ok) {
         const data = await response.json();
         authCtx.login(data.idToken, enteredEmail);
-        //history.replace("/store");
+        history.replace("/login");
+        console.log("User Sign in Successfully")
       } else {
         let errorMessage = "Authentication failed!";
         throw new Error(errorMessage);
@@ -128,4 +129,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default AuthSignUPForm;
