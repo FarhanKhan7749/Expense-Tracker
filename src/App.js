@@ -4,8 +4,9 @@ import { Container } from "react-bootstrap";
 import AuthSignUPForm from "./Auth/AuthSignUPForm";
 import AuthLoginForm from "./Auth/AuthLoginForm";
 import Header from "./Components/Layout/Header";
-import WelcomeHome from "./Pages/welcomePage";
+import WelcomeHome from "./Pages/WlcomePage/welcomePage";
 import AuthContext from "./store/auth-context";
+import ProfileSection from "./Pages/ProfilePage/profilePage";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -18,13 +19,16 @@ function App() {
             <Route path="/welcome" exact>
               <WelcomeHome />
             </Route>
-            <Route path="/login" exact>
+            {!authCtx.isLoggedin && <Route path="">
               <AuthLoginForm />
-            </Route>
+            </Route>}
             <Route path="/signup" exact>
               <AuthSignUPForm />
             </Route>
-            {authCtx.login && <Route path="*">
+            <Route path="/profile" exact>
+              <ProfileSection />
+            </Route>
+            {authCtx.isLoggedin && <Route path="*">
               <AuthLoginForm />
             </Route>}
           </Switch>
