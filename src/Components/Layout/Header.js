@@ -4,15 +4,6 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 //import classes from './Header.module.css';
-const divStyle = {
-  background: "#777",
-  padding: "40px",
-};
-// const titleStyle = {
-//   fontFamily: 'Times New Roman',
-//   fontSize:'100px',
-//   color: 'white'
-// };
 const fontSize = {
   fontFamily: "Times New Roman",
   fontSize: "20px",
@@ -30,19 +21,27 @@ const Header = (props) => {
   return (
     <>
       <Navbar sticky="top" bg="dark" variant="dark">
-        <Container fluid style={fontSize}>
-          <Nav className="d-flex flex-grow-1">
-            <Navbar.Brand href="/home">D-Expense</Navbar.Brand>
-            <Nav.Link className="me-2" to="/home" as={NavLink}>
+        <Container className="p-2" fluid style={fontSize}>
+          <Navbar.Brand className="ml-5" href="/home">D-Expense</Navbar.Brand>
+          <Nav className="mr-5 justify-content-end">
+            {/* <Nav.Link className="me-2" to="/home" as={NavLink}>
               Home
-            </Nav.Link>
+            </Nav.Link> */}
             {!authCtx.isLoggedin && (
-              <Nav.Link className="me-2" to="/login" as={NavLink}>
+              <Nav.Link
+                className="me-2 justify-content-center"
+                to="/login"
+                as={NavLink}
+              >
                 Log In
               </Nav.Link>
             )}
             {!authCtx.isLoggedin && (
-              <Nav.Link className="me-2" to="/signup" as={NavLink}>
+              <Nav.Link
+                className="me-2 justify-content-center"
+                to="/signup"
+                as={NavLink}
+              >
                 Sign Up
               </Nav.Link>
             )}
@@ -51,7 +50,7 @@ const Header = (props) => {
             <Button
               onClick={logoutHandler}
               variant="outline-primary"
-              className="m-1 rounded"
+              className="mr-5 rounded"
             >
               Logout
             </Button>
