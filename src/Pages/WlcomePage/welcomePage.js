@@ -1,7 +1,36 @@
-import { Container, Badge } from "react-bootstrap";
+import { Container, Badge, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 
 const WelcomeHome = () => {
+  
+  const authCtx = useContext(AuthContext);
+
+    const verifyEmailHandler = () =>{
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyB_-vfM--LmM1vWcFIkvCYJs7kKfJ6xfl8'
+        fetch(url,{
+            method: 'POST',
+            body: JSON.stringify({
+                requestType: "VERIFY_EMAIL",
+                idToken: authCtx.token,
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((res)=>{
+            if(res.ok){
+                return res.json();
+            }else{
+                let errorMessage = "Failed to Verify Email";
+                throw new Error(errorMessage);
+            }
+        }).then((data)=>{
+            console.log(data);
+        }).catch((err)=>{
+            alert(err.message);
+        })
+    }
   return (
     <div
       style={{
@@ -20,6 +49,14 @@ const WelcomeHome = () => {
             </Link>
           </Badge>
         </p>
+        <Button
+          className="col-md-3 text-center"
+          variant="primary"
+          type="submit"
+          onClick={verifyEmailHandler}
+        >
+          Verify Your Email
+        </Button>
       </Container>
     </div>
   );
