@@ -46,6 +46,7 @@ const Header = (props) => {
               </Nav.Link>
             )}
           </Nav>
+          
           {authCtx.isLoggedin && (
             <Button
               onClick={logoutHandler}
