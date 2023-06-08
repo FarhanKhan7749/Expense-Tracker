@@ -104,7 +104,7 @@ const AuthLoginForm = () => {
           </Container>
           <Container className="text-center justify-content-center align-items-center">
             {/* Forgot Password link */}
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <Link className="text-decoration-none" to="/forgot-password">Forgot Password?</Link>
           </Container>
         </Form>
       </Container>

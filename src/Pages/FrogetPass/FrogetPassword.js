@@ -85,7 +85,7 @@ const ForgotPassword = () => {
               )}
               {isLoading && <p>Loading...</p>}
             </Container>
-            <p><NavLink to="/login" className="text-warning">Already a user?</NavLink></p>
+            <p>Already a user? <NavLink to="/login" className="text-white text-decoration-none">Login</NavLink></p>
           </Form.Group>
         </Form>
       </Container>
