@@ -8,10 +8,10 @@ const WelcomeHome = () => {
 
   const history = useHistory();
 
-  const logoutHandler = () => {
-    authCtx.logout();
-    history.replace("/login");
-  };
+  // const logoutHandler = () => {
+  //   authCtx.logout();
+  //   history.replace("/login");
+  // };
 
   const verifyEmailHandler = () => {
     let url =
@@ -41,6 +41,10 @@ const WelcomeHome = () => {
         alert(err.message);
       });
   };
+
+  const addClickHandler = () =>{
+    history.replace('/expenses');
+}
   return (
     <div
       style={{
@@ -68,11 +72,11 @@ const WelcomeHome = () => {
           Verify Your Email
         </Button>
         <Button
-          onClick={logoutHandler}
-          variant="danger"
+          onClick={addClickHandler}
+          variant="primary  "
           className="m-2 col-md-3 text-center rounded"
         >
-          Logout
+          Add Expenses
         </Button>
       </Container>
     </div>

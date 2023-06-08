@@ -8,6 +8,7 @@ import WelcomeHome from "./Pages/WlcomePage/welcomePage";
 import AuthContext from "./store/auth-context";
 import ProfileSection from "./Pages/ProfilePage/profilePage";
 import ForgotPassword from "./Pages/FrogetPass/FrogetPassword";
+import Expenses from "./Components/Layout/Expenses/Expenses";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -20,6 +21,9 @@ function App() {
             <Route path="/forgot-password">
               <ForgotPassword />
             </Route>
+            {authCtx.isLoggedin && <Route path="/expenses">
+              <Expenses />
+            </Route>}
             <Route path="/welcome" exact>
               <WelcomeHome />
             </Route>
