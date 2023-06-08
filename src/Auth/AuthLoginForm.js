@@ -105,8 +105,6 @@ const AuthLoginForm = () => {
           <Container className="text-center justify-content-center align-items-center">
             {/* Forgot Password link */}
             <Link to="/forgot-password">Forgot Password?</Link>
-
-            {isLoading && <p>Sending request...</p>}
           </Container>
         </Form>
       </Container>

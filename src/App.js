@@ -7,6 +7,7 @@ import Header from "./Components/Layout/Header";
 import WelcomeHome from "./Pages/WlcomePage/welcomePage";
 import AuthContext from "./store/auth-context";
 import ProfileSection from "./Pages/ProfilePage/profilePage";
+import ForgotPassword from "./Pages/FrogetPass/FrogetPassword";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -16,21 +17,28 @@ function App() {
       <Container>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
+            <Route path="/forgot-password">
+              <ForgotPassword />
+            </Route>
             <Route path="/welcome" exact>
               <WelcomeHome />
             </Route>
-            {!authCtx.isLoggedin && <Route path="">
-              <AuthLoginForm />
-            </Route>}
+            {!authCtx.isLoggedin && (
+              <Route path="">
+                <AuthLoginForm />
+              </Route>
+            )}
             <Route path="/signup" exact>
               <AuthSignUPForm />
             </Route>
             <Route path="/profile" exact>
               <ProfileSection />
             </Route>
-            {authCtx.isLoggedin && <Route path="*">
-              <AuthLoginForm />
-            </Route>}
+            {authCtx.isLoggedin && (
+              <Route path="*">
+                <AuthLoginForm />
+              </Route>
+            )}
           </Switch>
         </Suspense>
       </Container>
