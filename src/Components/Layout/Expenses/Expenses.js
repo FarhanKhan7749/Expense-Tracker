@@ -10,7 +10,7 @@ const Expenses = () => {
   const descriptionInputRef = useRef();
   const categoryInputRef = useRef();
 
-  const onClickHandler = (event) => {
+  const onClickHandler = async (event) => {
     event.preventDefault();
     const enteredAmount = amountInputref.current.value;
     const enteredDescription = descriptionInputRef.current.value;
@@ -20,34 +20,73 @@ const Expenses = () => {
       description: enteredDescription,
       category: enteredCategory,
     };
-    axios.post(
-      "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json",
-      expenses
-    );
-    setExpenseList([...expenseList, expenses]);
-    setShowExpenses(true);
-    amountInputref.current.value = "";
-    descriptionInputRef.current.value = "";
+    try {
+      const response = await axios.post(
+        "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json",
+        expenses
+      );
+      const idToken = response.data.name;
+      const addExpense = { id: idToken, ...expenses };
+      setExpenseList([...expenseList, addExpense]);
+      setShowExpenses(true);
+      amountInputref.current.value = "";
+      descriptionInputRef.current.value = "";
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    axios
-      .get(
-        "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json"
-      )
-      .then((res) => {
-        const expenses = res.data ? Object.values(res.data) : [];
+    try {
+      const fetchExpense = async () => {
+        const response = await axios.get(
+          "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json"
+        );
+        const data = response.data;
+        const newExpenseArray = [];
+        for (let key in data) {
+          newExpenseArray.push({ id: key, ...data[key] });
+        }
         setShowExpenses(true);
-        setExpenseList([...expenses]);
-      });
+        if (newExpenseArray.length === 0) {
+          setShowExpenses(false);
+        }
+        setExpenseList([...newExpenseArray]);
+      };
+      fetchExpense();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
-
-  const deleteExpenseHandler = () => {
-     // Handle delete logic for the expense 
+  const deleteExpenseHandler = async (expense) => {
+    const id = expense.id;
+    try {
+      await axios.delete(
+        `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    setExpenseList(expenseList.filter((data) => data.id !== expense.id));
+    if (expenseList.length === 1) {
+      setShowExpenses(false);
+    }
+    console.log("Expense is succefully deleted");
   };
 
-  const editExpenseHandler = (index) => {
-    // Handle edit logic for the expense
+  const editExpenseHandler = async (expense) => {
+    amountInputref.current.value = expense.amount;
+    descriptionInputRef.current.value = expense.description;
+    categoryInputRef.current.value = expense.category;
+    const id = expense.id;
+    try {
+      await axios.delete(
+        `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    setExpenseList(expenseList.filter((data) => data.id !== expense.id));
   };
 
   const addedExpenses = expenseList.map((exp) => (
@@ -58,14 +97,16 @@ const Expenses = () => {
       <td>
         <Button
           variant="danger"
-          onClick={() => deleteExpenseHandler()}
+          onClick={() => deleteExpenseHandler(exp)}
           className=""
         >
           Delete
         </Button>
+      </td>
+      <td>
         <Button
           variant="primary"
-          onClick={() => editExpenseHandler()}
+          onClick={() => editExpenseHandler(exp)}
           className=""
         >
           Edit
@@ -112,16 +153,18 @@ const Expenses = () => {
           <button onClick={onClickHandler}>Add</button>
         </Form>
       </Container>
-      {showExpenses && <Table className={classes["list-class"]} striped bordered hover>
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>{addedExpenses}</tbody>
-      </Table>}
+      {showExpenses && (
+        <Table className={classes["list-class"]} striped bordered hover>
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>{addedExpenses}</tbody>
+        </Table>
+      )}
     </>
   );
 };
