@@ -112,7 +112,7 @@ const AuthLoginForm = () => {
         className="col-md-6 col-lg-6 mt-1 p-2 border rounded"
         style={{ fontFamily: "Times New Roman" }}
       > 
-        <>Dont't have an accounts? <Link to="/signup">Sign Up</Link></>
+        <>Dont't have an accounts? <Link className="text-decoration-none" to="/signup">Sign Up</Link></>
       </Container>
     </React.Fragment>
   );

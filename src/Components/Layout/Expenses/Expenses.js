@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import {Container, Form } from "react-bootstrap";
+import { Container, Form, Table, Button } from "react-bootstrap";
 import classes from "./Expenses.module.css";
 
 const Expenses = () => {
@@ -42,21 +42,37 @@ const Expenses = () => {
       });
   }, []);
 
-  const addedExpenses = (
-    expenseList.map((exp) => (
-        <li key={Math.random()}>
-            <div className={classes.amount}>
-                {exp.amount}
-            </div>
-            <div className={classes.description}>
-                {exp.description}
-            </div>
-            <div className={classes.category}>
-                {exp.category}
-            </div>
-        </li>
-    ))
-)
+  const deleteExpenseHandler = () => {
+     // Handle delete logic for the expense 
+  };
+
+  const editExpenseHandler = (index) => {
+    // Handle edit logic for the expense
+  };
+
+  const addedExpenses = expenseList.map((exp) => (
+    <tr key={Math.random()}>
+      <td>{exp.amount}</td>
+      <td>{exp.description}</td>
+      <td>{exp.category}</td>
+      <td>
+        <Button
+          variant="danger"
+          onClick={() => deleteExpenseHandler()}
+          className=""
+        >
+          Delete
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => editExpenseHandler()}
+          className=""
+        >
+          Edit
+        </Button>
+      </td>
+    </tr>
+  ));
 
   return (
     <>
@@ -81,7 +97,11 @@ const Expenses = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="category">
             <Form.Label>Category</Form.Label>
-            <Form.Select type="category" placeholder="Select Expense" ref={categoryInputRef}>
+            <Form.Select
+              type="category"
+              placeholder="Select Expense"
+              ref={categoryInputRef}
+            >
               <option value="food">Food</option>
               <option value="shopping">Shopping</option>
               <option value="fuel">Fuel</option>
@@ -92,15 +112,16 @@ const Expenses = () => {
           <button onClick={onClickHandler}>Add</button>
         </Form>
       </Container>
-      {showExpenses && (
-        <div className={classes["added-expenses"]}>
-          <div className={classes["expense-heading"]}>
-            <div>Amount</div>
-            <div>Description</div> <div>Category</div>
-          </div>
-          <ul>{addedExpenses}</ul>
-        </div>
-      )}
+      {showExpenses && <Table className={classes["list-class"]} striped bordered hover>
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>{addedExpenses}</tbody>
+      </Table>}
     </>
   );
 };

@@ -28,7 +28,7 @@ function App() {
               <WelcomeHome />
             </Route>
             {!authCtx.isLoggedin && (
-              <Route path="">
+              <Route path="/login">
                 <AuthLoginForm />
               </Route>
             )}

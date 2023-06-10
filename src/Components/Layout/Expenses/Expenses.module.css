@@ -1,9 +1,6 @@
 .expense-form {
-    width:95%;
-    max-width: 40%;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    text-align: center;
     margin: 5rem auto;
     padding: 2rem;
     background-color: rgb(129, 207, 207);
@@ -13,6 +10,7 @@
 .expense-form header {
     font-weight: bolder;
     font-size: 25px;
+    text-align: center;
     padding-bottom: 25px;
 }
 
@@ -48,6 +46,7 @@
 .expense-form button{
     width:80px;
     margin-top: 2rem;
+    align-items: center;
     background-color: rgb(129, 255, 255);
     border: 1px solid black;
     padding: 5px;
@@ -59,15 +58,15 @@
     background-color: rgb(111, 212, 212);
 }
 
-.added-expenses {
+/* .added-expenses {
     margin: 1rem auto;
     width:95%;
     max-width: 50%;
     box-shadow: 0 1px 4px rgba(0,0,0,0.3);
     background-color:rgb(200, 248, 252) ;
-}
+} */
 
-.added-expenses ul {
+/* .added-expenses ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
@@ -79,9 +78,9 @@
     gap: 30px;
     justify-content: space-around;
     margin-bottom: 10px;
-}
+} */
 
-.amount {
+/* .amount {
    width: 25%;
    display: flex;
    justify-content: center;  
@@ -99,7 +98,7 @@
     width: 33%;
     justify-content: center;
     margin-right: 10px;
-}
+} */
 
 .expense-heading {
     display: flex;
@@ -107,4 +106,10 @@
     font-weight: bolder;
     padding: 10px;
     border-bottom: 1px solid;
+}
+
+.list-class{
+    background-color: rgb(129, 207, 207);
+    border-radius: 8px;
+    text-align: center;
 }
