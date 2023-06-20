@@ -6,9 +6,12 @@ import classes from "./Expenses.module.css";
 const Expenses = () => {
   const [expenseList, setExpenseList] = useState([]);
   const [showExpenses, setShowExpenses] = useState(false);
+  const [editableExpense, setEditableExpense] = useState(null);
   const amountInputref = useRef();
   const descriptionInputRef = useRef();
   const categoryInputRef = useRef();
+
+  //"https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json"
 
   const onClickHandler = async (event) => {
     event.preventDefault();
@@ -20,20 +23,33 @@ const Expenses = () => {
       description: enteredDescription,
       category: enteredCategory,
     };
-    try {
-      const response = await axios.post(
-        "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json",
-        expenses
-      );
-      const idToken = response.data.name;
-      const addExpense = { id: idToken, ...expenses };
-      setExpenseList([...expenseList, addExpense]);
-      setShowExpenses(true);
-      amountInputref.current.value = "";
-      descriptionInputRef.current.value = "";
-    } catch (err) {
-      console.log(err);
+    if (editableExpense) {
+      const id = editableExpense.id;
+      try {
+        await axios.put(
+          `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`,
+          expenses
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json",
+          expenses
+        );
+        const idToken = response.data.name;
+        const addExpense = { id: idToken, ...expenses };
+        setExpenseList([...expenseList, addExpense]);
+      } catch (err) {
+        console.log(err);
+      }
     }
+    amountInputref.current.value = "";
+    descriptionInputRef.current.value = "";
+    setShowExpenses(true);
+    setEditableExpense(null);
   };
 
   useEffect(() => {
@@ -57,7 +73,9 @@ const Expenses = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [editableExpense]);
+
+
   const deleteExpenseHandler = async (expense) => {
     const id = expense.id;
     try {
@@ -74,19 +92,11 @@ const Expenses = () => {
     console.log("Expense is succefully deleted");
   };
 
-  const editExpenseHandler = async (expense) => {
+  const editExpenseHandler = (expense) => {
     amountInputref.current.value = expense.amount;
     descriptionInputRef.current.value = expense.description;
     categoryInputRef.current.value = expense.category;
-    const id = expense.id;
-    try {
-      await axios.delete(
-        `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`
-      );
-    } catch (err) {
-      console.log(err);
-    }
-    setExpenseList(expenseList.filter((data) => data.id !== expense.id));
+    setEditableExpense(expense);
   };
 
   const addedExpenses = expenseList.map((exp) => (
