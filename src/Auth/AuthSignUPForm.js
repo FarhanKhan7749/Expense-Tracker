@@ -1,16 +1,19 @@
 import { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
-import AuthContext from "../store/auth-context";
+//import AuthContext from "../store/auth-context";
+import { authActions } from "../store/authSlice";
+import { useDispatch } from "react-redux";
 
 const AuthSignUPForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
   const formRef = useRef();
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -35,7 +38,6 @@ const AuthSignUPForm = () => {
 
     let url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB_-vfM--LmM1vWcFIkvCYJs7kKfJ6xfl8";
-      
 
     setIsLoading(true);
     try {
@@ -53,9 +55,11 @@ const AuthSignUPForm = () => {
       setIsLoading(false);
       if (response.ok) {
         const data = await response.json();
-        authCtx.login(data.idToken, enteredEmail);
+        //authCtx.login(data.idToken, enteredEmail);
+        const email = enteredEmail.replace("@", "").replace(".", "");
+        dispatch(authActions.login({ token: data.idToken, email: email }));
         history.replace("/login");
-        console.log("User Sign in Successfully")
+        console.log("User Sign in Successfully");
       } else {
         let errorMessage = "Authentication failed!";
         throw new Error(errorMessage);

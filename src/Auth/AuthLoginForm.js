@@ -2,15 +2,18 @@ import React, { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Form, Button, Container } from "react-bootstrap";
-import AuthContext from "../store/auth-context";
+//import AuthContext from "../store/auth-context";
+import { useDispatch } from 'react-redux';
+import { authActions } from "../store/authSlice";
 
 const AuthLoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const formRef = useRef();
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -45,7 +48,9 @@ const AuthLoginForm = () => {
       setIsLoading(false);
       if (response.ok) {
         const data = await response.json();
-        authCtx.login(data.idToken, enteredEmail);
+        //authCtx.login(data.idToken, enteredEmail);
+        const email = enteredEmail.replace('@','').replace('.','');
+       dispatch(authActions.login({token: data.idToken, email: email}));
         history.replace("/welcome");
         console.log("User Log in Successfully");
       } else {

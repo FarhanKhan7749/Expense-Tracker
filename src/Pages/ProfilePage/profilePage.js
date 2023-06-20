@@ -1,15 +1,17 @@
 import { useHistory } from "react-router-dom";
-import React, { useRef, useContext, useEffect } from "react";
-
+import React, { useRef, useEffect } from "react";
 import classes from "./profilePage.module.css";
-import AuthContext from "../../store/auth-context";
 import { Button, Container, Form } from "react-bootstrap";
+import { useSelector } from 'react-redux';
+
 
 const ProfilePage = () => {
+  const token = useSelector(state => state.auth.token);
   const nameInputRef = useRef();
   const photoUrlInputRef = useRef();
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
   const history = useHistory();
+  
   const formSumbitHandler = (event) => {
     event.preventDefault();
     const enteredName = nameInputRef.current.value;
@@ -19,7 +21,7 @@ const ProfilePage = () => {
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
-        idToken: authCtx.token,
+        idToken: token,
         displayName: enteredName,
         photoUrl: enteredPhotoUrl,
         returnSecureToken: true,
@@ -33,7 +35,6 @@ const ProfilePage = () => {
           return res.json();
         } else {
           let errorMessage = "Failed to update Details";
-          console.log(authCtx.token);
           throw new Error(errorMessage);
         }
       })
@@ -55,7 +56,7 @@ const ProfilePage = () => {
       {
         method: "POST",
         body: JSON.stringify({
-          idToken: authCtx.token,
+          idToken: token,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +84,9 @@ const ProfilePage = () => {
       .catch((error) => {
         alert(error.message);
       });
-  }, [authCtx.token]);
+  }, []);
+
+  
   return (
     <section className={classes.profile}>
       <Container className="d-flex border-bottom rounded p-1">

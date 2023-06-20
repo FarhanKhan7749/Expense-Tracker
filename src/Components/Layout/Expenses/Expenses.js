@@ -11,6 +11,9 @@ const Expenses = () => {
   const descriptionInputRef = useRef();
   const categoryInputRef = useRef();
 
+  const email = localStorage.getItem('email');
+
+
   //"https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json"
 
   const onClickHandler = async (event) => {
@@ -27,7 +30,7 @@ const Expenses = () => {
       const id = editableExpense.id;
       try {
         await axios.put(
-          `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`,
+          `https://expence-tracker-server-react-default-rtdb.firebaseio.com/${email}/${id}.json`,
           expenses
         );
       } catch (err) {
@@ -36,7 +39,7 @@ const Expenses = () => {
     } else {
       try {
         const response = await axios.post(
-          "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json",
+          `https://expence-tracker-server-react-default-rtdb.firebaseio.com/${email}.json`,
           expenses
         );
         const idToken = response.data.name;
@@ -56,7 +59,7 @@ const Expenses = () => {
     try {
       const fetchExpense = async () => {
         const response = await axios.get(
-          "https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses.json"
+          `https://expence-tracker-server-react-default-rtdb.firebaseio.com/${email}.json`
         );
         const data = response.data;
         const newExpenseArray = [];
@@ -73,14 +76,14 @@ const Expenses = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [editableExpense]);
+  }, [editableExpense, email]);
 
 
   const deleteExpenseHandler = async (expense) => {
     const id = expense.id;
     try {
       await axios.delete(
-        `https://expence-tracker-server-react-default-rtdb.firebaseio.com/expenses/${id}.json`
+        `https://expence-tracker-server-react-default-rtdb.firebaseio.com/${email}/${id}.json`
       );
     } catch (err) {
       console.log(err);
@@ -98,6 +101,10 @@ const Expenses = () => {
     categoryInputRef.current.value = expense.category;
     setEditableExpense(expense);
   };
+
+  const totalAmount = expenseList.reduce((curr, acc) => {
+    return curr + parseInt(acc.amount)
+  }, 0)
 
   const addedExpenses = expenseList.map((exp) => (
     <tr key={Math.random()}>
@@ -175,6 +182,9 @@ const Expenses = () => {
           <tbody>{addedExpenses}</tbody>
         </Table>
       )}
+      <Container>{totalAmount >= 10000 && <div className={classes.actions}>
+                <button>Activate Premium</button>
+            </div>}</Container>
     </>
   );
 };

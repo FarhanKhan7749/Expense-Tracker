@@ -2,20 +2,24 @@ import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import { useSelector, useDispatch } from 'react-redux';
+//import AuthContext from "../../store/auth-context";
 //import classes from './Header.module.css';
+import { authActions
+ } from "../../store/authSlice";
 const fontSize = {
   fontFamily: "Times New Roman",
   fontSize: "20px",
 };
 
 const Header = (props) => {
-  const authCtx = useContext(AuthContext);
-
+  //const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
   const history = useHistory();
 
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout())
     history.replace("/login");
   };
   return (
@@ -27,7 +31,7 @@ const Header = (props) => {
             {/* <Nav.Link className="me-2" to="/home" as={NavLink}>
               Home
             </Nav.Link> */}
-            {!authCtx.isLoggedin && (
+            {!isLoggedIn && (
               <Nav.Link
                 className="me-2 justify-content-center"
                 to="/login"
@@ -36,7 +40,7 @@ const Header = (props) => {
                 Log In
               </Nav.Link>
             )}
-            {!authCtx.isLoggedin && (
+            {!isLoggedIn && (
               <Nav.Link
                 className="me-2 justify-content-center"
                 to="/signup"
@@ -47,7 +51,7 @@ const Header = (props) => {
             )}
           </Nav>
           
-          {authCtx.isLoggedin && (
+          {isLoggedIn && (
             <Button
               onClick={logoutHandler}
               variant="outline-primary"

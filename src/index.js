@@ -5,16 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "../node_modules/react-bootstrap/dist/react-bootstrap";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { AuthContextProvider } from "./store/auth-context";
+//import { AuthContextProvider } from "./store/auth-context";
 import { BrowserRouter } from "react-router-dom";
-
+import { Provider } from "react-redux";
+import store from "./store/index";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthContextProvider>
+  <Provider store={store}> 
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </AuthContextProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,17 +1,21 @@
 import { Container, Badge, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
-import { useContext } from "react";
+//import AuthContext from "../../store/auth-context";
+//import { useContext } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 const WelcomeHome = () => {
-  const authCtx = useContext(AuthContext);
+  //const authCtx = useContext(AuthContext);
+  const token = useSelector(state => state.auth.token);
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  // const logoutHandler = () => {
-  //   authCtx.logout();
-  //   history.replace("/login");
-  // };
+  const logoutHandler = () => {
+    dispatch(authActions.logout());
+    history.replace("/login");
+  };
 
   const verifyEmailHandler = () => {
     let url =
@@ -20,7 +24,7 @@ const WelcomeHome = () => {
       method: "POST",
       body: JSON.stringify({
         requestType: "VERIFY_EMAIL",
-        idToken: authCtx.token,
+        idToken: token,
       }),
       headers: {
         "Content-Type": "application/json",
