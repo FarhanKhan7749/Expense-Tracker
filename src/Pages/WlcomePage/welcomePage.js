@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 //import AuthContext from "../../store/auth-context";
 //import { useContext } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useSelector, useDispatch } from "react-redux";
-import { authActions } from "../../store/authSlice";
+import { useSelector } from "react-redux";
+//import { useDispatch } from "react-redux";
+//import { authActions } from "../../store/authSlice";
 const WelcomeHome = () => {
   //const authCtx = useContext(AuthContext);
   const token = useSelector(state => state.auth.token);
 
   const history = useHistory();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    dispatch(authActions.logout());
-    history.replace("/login");
-  };
+  // const logoutHandler = () => {
+  //   dispatch(authActions.logout());
+  //   history.replace("/login");
+  // };
 
   const verifyEmailHandler = () => {
     let url =

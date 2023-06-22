@@ -1,4 +1,4 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import AuthSignUPForm from "./Auth/AuthSignUPForm";
@@ -10,7 +10,7 @@ import WelcomeHome from "./Pages/WlcomePage/welcomePage";
 import ProfileSection from "./Pages/ProfilePage/profilePage";
 import ForgotPassword from "./Pages/FrogetPass/FrogetPassword";
 import Expenses from "./Components/Layout/Expenses/Expenses";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { authActions } from "./store/authSlice";
 

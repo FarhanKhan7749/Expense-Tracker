@@ -1,61 +1,61 @@
 .expense-form {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    margin: 5rem auto;
-    padding: 2rem;
-    background-color: rgb(129, 207, 207);
-    margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin: 5rem auto;
+  padding: 2rem;
+  background-color: rgb(129, 207, 207);
+  margin-bottom: 1rem;
 }
 
 .expense-form header {
-    font-weight: bolder;
-    font-size: 25px;
-    text-align: center;
-    padding-bottom: 25px;
+  font-weight: bolder;
+  font-size: 25px;
+  text-align: center;
+  padding-bottom: 25px;
 }
 
-.expense{
-    margin-bottom: 0.5rem;
+.expense {
+  margin-bottom: 0.5rem;
 }
 
 .expense label {
-    display: block;
-    text-align: left;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+  display: block;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .expense input {
-    width: 98%;
-    font: inherit;
-    padding: 0.25rem;
-    text-align: left;
-    border-radius: 4px;
-    border:1px solid black;
+  width: 98%;
+  font: inherit;
+  padding: 0.25rem;
+  text-align: left;
+  border-radius: 4px;
+  border: 1px solid black;
 }
 
 .expense select {
-    width: 100%;
-    font: inherit;
-    padding: 0.25rem;
-    text-align: left;
-    border-radius: 4px;
-    border:1px solid black;
+  width: 100%;
+  font: inherit;
+  padding: 0.25rem;
+  text-align: left;
+  border-radius: 4px;
+  border: 1px solid black;
 }
 
-.expense-form button{
-    width:80px;
-    margin-top: 2rem;
-    align-items: center;
-    background-color: rgb(129, 255, 255);
-    border: 1px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    font-weight: bolder;
+.expense-form button {
+  width: 80px;
+  margin-top: 2rem;
+  align-items: center;
+  background-color: rgb(129, 255, 255);
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bolder;
 }
 
-.expense-form button:hover{
-    background-color: rgb(111, 212, 212);
+.expense-form button:hover {
+  background-color: rgb(111, 212, 212);
 }
 
 /* .added-expenses {
@@ -101,41 +101,89 @@
 } */
 
 .expense-heading {
-    display: flex;
-    justify-content: space-around;
-    font-weight: bolder;
-    padding: 10px;
-    border-bottom: 1px solid;
+  display: flex;
+  justify-content: space-around;
+  font-weight: bolder;
+  padding: 10px;
+  border-bottom: 1px solid;
 }
 
-.list-class{
-    background-color: rgb(129, 207, 207);
-    border-radius: 8px;
-    text-align: center;
+.list-class {
+  background-color: rgb(129, 207, 207);
+  border-radius: 8px;
+  text-align: center;
 }
 
 .total {
-    text-align: left;
-    font-size: large;
-    padding: 10px 25px;
-    font-weight: bolder;
- }
+  text-align: left;
+  font-size: large;
+  padding: 10px 25px;
+  font-weight: bolder;
+}
 
- .actions {
-    margin-top: 0.5rem;
-    margin-bottom: 3rem;
+.actions {
+  margin-top: 0.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.actions button {
+  background-color: aquamarine;
+  border: 1px solid green;
+  padding: 12px;
+  font-weight: bolder;
+  font-size: medium;
+  border-radius: 4px;
+  margin:1rem;
+}
+
+.actions button:hover {
+  background-color: rgb(59, 221, 181);
+}
+
+.dark-theme {
+  /* background-color: #333; */
+  /* color: rgb(66, 48, 48); */
+  background-color: rgb(54, 54, 54);
+  color: rgb(51, 45, 45);
+  margin-right: -60px;
+  padding: 1px 0px;
+}
+
+.expense-form-dark {
+    
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     text-align: center;
+    margin: 5rem auto;
+    padding: 2rem;
+    background-color: rgb(82, 85, 85);
+    margin-bottom: 1rem;
+    color: bisque;
 }
 
-.actions button{
-    background-color: aquamarine;
-    border: 1px solid green;
-    padding: 12px;
+.expense-form-dark header {
     font-weight: bolder;
-    font-size: medium;
-    border-radius: 4px;
+    font-size: 25px;
+    padding-bottom: 25px;
 }
 
-.actions button:hover{
-    background-color:rgb(59, 221, 181);
+.expense-form-dark button{
+    width:80px;
+    margin-top: 2rem;
+    background-color: rgb(226, 215, 152);
+    border: 1px solid black;
+    padding: 5px;
+    font-weight: bolder;
+}
+
+.expense-form-dark button:hover{
+    background-color:rgb(243, 221, 96);
+}
+
+.list-class-dark{
+    background-color: rgb(226, 215, 152);
+    border: 1px solid black;
+    border-radius: 8px;
+    text-align: center;
 }
