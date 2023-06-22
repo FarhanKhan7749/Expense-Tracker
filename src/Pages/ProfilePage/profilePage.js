@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 
 
 const ProfilePage = () => {
-  // const token = useSelector(state => state.auth.token);
-  const token = localStorage.getItem('token');
-  //console.log(token)
+  const token = useSelector(state => state.auth.token);
+  // const token = localStorage.getItem('token');
+  console.log(token)
   const nameInputRef = useRef();
   const photoUrlInputRef = useRef();
   //const authCtx = useContext(AuthContext);
