@@ -9,7 +9,7 @@ import WelcomeHome from "./Pages/WlcomePage/welcomePage";
 import ProfileSection from "./Pages/ProfilePage/profilePage";
 import ForgotPassword from "./Pages/FrogetPass/FrogetPassword";
 import Expenses from "./Components/Layout/Expenses/Expenses";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { useEffect } from 'react';
 import { authActions } from "./store/authSlice";
 
@@ -17,30 +17,15 @@ function App() {
   //const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
-  const userEmail = useSelector(state => state.auth.email);
-  const userToken = useSelector(state => state.auth.token);
+  //const userEmail = useSelector(state => state.auth.email);
+  //const userToken = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    const token = localStorage.getItem('token');
-    if (email && token) {
-      dispatch(authActions.login({ email: email, token: token }))
-    }
+    if(localStorage.getItem('token') !== null){
+      dispatch(authActions.isAuth());
+    };
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("useeffect called");
-    if (isLoggedIn) {
-      localStorage.setItem('email', userEmail);
-      localStorage.setItem('token', userToken);
-      console.log("useffect fectching")
-    } else {
-      localStorage.removeItem('email');
-      localStorage.removeItem('token');
-      console.log("useeffect remove")
-    }
-  }, [isLoggedIn, userEmail, userToken]);
-
+  
 
   return (
     <React.Fragment>

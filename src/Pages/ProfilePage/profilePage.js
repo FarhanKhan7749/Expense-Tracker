@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 
 
 const ProfilePage = () => {
-  const token = useSelector(state => state.auth.token);
+  // const token = useSelector(state => state.auth.token);
+  const token = localStorage.getItem('token');
+  //console.log(token)
   const nameInputRef = useRef();
   const photoUrlInputRef = useRef();
   //const authCtx = useContext(AuthContext);
@@ -49,7 +51,7 @@ const ProfilePage = () => {
   const cancelButtonHandler = () => {
     history.replace("/welcome");
   };
-
+ 
   useEffect(() => {
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB_-vfM--LmM1vWcFIkvCYJs7kKfJ6xfl8",
@@ -73,9 +75,11 @@ const ProfilePage = () => {
       })
       .then((data) => {
         const email = localStorage.getItem("email");
+        console.log(email);
         const users = data.users;
+        console.log(users[0].email);
         users.forEach((user) => {
-          if (user.email === email) {
+          if (user.email.replace('@','').replace('.','') === email) {
             nameInputRef.current.value = user.displayName;
             photoUrlInputRef.current.value = user.photoUrl;
           }
@@ -84,7 +88,7 @@ const ProfilePage = () => {
       .catch((error) => {
         alert(error.message);
       });
-  }, []);
+  }, [token]);
 
   
   return (
